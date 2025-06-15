@@ -10,7 +10,7 @@ class LearnerProgressController extends Controller
 {
     public function index(): View
     {
-        $learners = Learner::all();
+        $learners = Learner::simplePaginate(25);
         return view('learner-progress',['learners'=>$learners]);
     }
 }
