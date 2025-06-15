@@ -17,7 +17,21 @@
 
 <body>
     <div class="bg-red-400 py-10">
-        <h1 class="text-blue font-black">Learner Progress Page</h1>
+        <div>
+            <h1 class="text-blue font-black">Learner Progress Page</h1>
+            <form action="/learner-progress" method="GET">
+                @csrf
+                <select name="course" selected="{{$courses->first()->id}}">
+                    @foreach ($courses as $course)
+                    <option value="{{ $course->id}}">{{ $course->name}}</option>
+                    @endforeach
+                </select>
+                <button>Search</button>
+            </form>
+            <form action="/learner-progress" method="GET">
+            <button>Clear Filters</button></form>
+        </div>
+        
         @foreach ($learners as $learner)
             <div>
                 <h3>{{ $learner->firstname }} {{ $learner->lastname }}</h3>
