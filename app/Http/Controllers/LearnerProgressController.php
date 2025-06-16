@@ -17,10 +17,6 @@ class LearnerProgressController extends Controller
     {
         $selectedCourse = $request->input('course');
         $sortingOrder = $request->input('sort');
-        if (isset($selectedCourse)) {
-            error_log('Some message here.');
-        }
-        error_log("AVG(progress) " . $sortingOrder);
         $learners = Learner::when($selectedCourse, function (Builder $query, string $selectedCourse) {
             $query->whereHas('courses', function (Builder $query) use ($selectedCourse) {
                 $query->where('courses.id', $selectedCourse);
