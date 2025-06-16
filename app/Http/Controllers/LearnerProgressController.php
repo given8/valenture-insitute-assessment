@@ -17,25 +17,27 @@ class LearnerProgressController extends Controller
     {
         $selectedCourse = $request->input('course');
         $sortingOrder = $request->input('sort');
-        if(isset($selectedCourse)){
+        if (isset($selectedCourse)) {
             error_log('Some message here.');
         }
         error_log("AVG(progress) " . $sortingOrder);
-        $learners = Learner::when($selectedCourse, function(Builder $query, string $selectedCourse){
-            $query->whereHas('courses',function(Builder $query) use ($selectedCourse){
-                $query->where('courses.id',$selectedCourse);
+        $learners = Learner::when($selectedCourse, function (Builder $query, string $selectedCourse) {
+            $query->whereHas('courses', function (Builder $query) use ($selectedCourse) {
+                $query->where('courses.id', $selectedCourse);
             });
-        })->when($sortingOrder, function(Builder $query, string $sortingOrder){
-            $query->with('enrolments')
-        ->orderBy(Enrolment::select(DB::raw('AVG(progress)'))
-        ->whereColumn('enrolments.learner_id','learners.id'));
+        })->when($sortingOrder, function (Builder $query, string $sortingOrder) {
+            if ($sortingOrder == 'asc') {
+                $query->with('enrolments')
+                    ->orderBy(Enrolment::select(DB::raw('AVG(progress)'))
+                        ->whereColumn('enrolments.learner_id', 'learners.id'));
+            } else {
+                $query->with('enrolments')
+                    ->orderByDesc(Enrolment::select(DB::raw('AVG(progress)'))
+                        ->whereColumn('enrolments.learner_id', 'learners.id'));
+            }
         })->paginate(25);
-        // $learners=Learner::with('enrolments')
-        // ->orderBy(Enrolment::select(DB::raw('AVG(progress)'))
-        // ->whereColumn('enrolments.learner_id','learners.id'))
-        // ->paginate(25);
-        // dd($learners);
+
         $courses = Course::all();
-        return view('learner-progress', ['learners' => $learners, 'courses' => $courses,'selectedCourse'=>$selectedCourse,'sortingOrder'=>$sortingOrder]);
+        return view('learner-progress', ['learners' => $learners, 'courses' => $courses, 'selectedCourse' => $selectedCourse, 'sortingOrder' => $sortingOrder]);
     }
 }
