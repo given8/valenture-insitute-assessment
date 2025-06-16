@@ -36,6 +36,6 @@ class LearnerProgressController extends Controller
         // ->paginate(25);
         // dd($learners);
         $courses = Course::all();
-        return view('learner-progress', ['learners' => $learners, 'courses' => $courses]);
+        return view('learner-progress', ['learners' => $learners, 'courses' => $courses,'selectedCourse'=>$selectedCourse,'sortingOrder'=>$sortingOrder]);
     }
 }

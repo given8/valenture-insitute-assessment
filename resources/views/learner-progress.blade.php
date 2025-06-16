@@ -24,12 +24,21 @@
                 <select name="course">
                     <option value="">Course Filter</option>
                     @foreach ($courses as $course)
-                    <option value="{{ $course->id}}">{{ $course->name}}</option>
+                    <option 
+                        value="{{ $course->id}}"
+                         @if (isset($course) && $selectedCourse == $course->id) selected @endif>
+                            {{ $course->name}}
+                        </option>
                     @endforeach
                 </select>
-                <select name="sort" selected="asc">
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
+                <select name="sort">
+                    <option value="">Sorting Order</option>
+                    <option value="asc" @if (isset($course) && $sortingOrder == 'asc') selected @endif>
+                        Ascending
+                    </option>
+                    <option value="desc" @if (isset($course) && $sortingOrder == 'desc') selected @endif>
+                        Descending
+                    </option>
                 </select>
                 <button>Filter</button>
             </form>
@@ -52,7 +61,7 @@
             </div>
         @endforeach
         <div>
-            {{-- {{ $learners->links() }} --}}
+            {{ $learners->appends(request()->input())->links() }}
         </div>
     </div>
 </body>
