@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Notifications\Notifiable;
 
 class Learner extends Model
@@ -33,7 +32,6 @@ class Learner extends Model
         return $this->hasMany(Enrolment::class);
     }
 
-    //TODO: remove after debugging
     public function avg():float
    {
         return $this->enrolments()

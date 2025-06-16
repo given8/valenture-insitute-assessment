@@ -9,7 +9,6 @@ use App\Models\Enrolment;
 use Illuminate\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class LearnerProgressController extends Controller
 {
@@ -23,7 +22,7 @@ class LearnerProgressController extends Controller
             });
         })->when($sortingOrder, function (Builder $query, string $sortingOrder) {
             if ($sortingOrder == 'asc') {
-                $query->with('enrolments')
+                $query->with('enrolments') // Couldn't get this to work without repeating myself
                     ->orderBy(Enrolment::select(DB::raw('AVG(progress)'))
                         ->whereColumn('enrolments.learner_id', 'learners.id'));
             } else {

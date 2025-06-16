@@ -16,3 +16,14 @@ This getting started guide assumes that you have the following installed and are
 5. Install all javascript packages `npm i`
 6. Build Javascript Assets `npm run build`
 7. Start the development server: `php artisan serve`. The application will be reachable on http://localhost:8000
+
+## Things to Note
+The third user story was as follows
+>User Story 3: Sort Learners by Progress Percentage
+Given that I am a user on the /learner-progress page
+● There is a control (e.g., button, toggle, dropdown) to sort learners by progress
+● When I select to apply the sorting
+○ The list is sorted accordingly
+○ Sorting applies within the filtered course view or across all courses
+
+I encountered some confusion on what to do when the user wants to sort by progress percentage when they have not chosen a course. I took a decision to sort via the avg completion rate of their courses and this applies to whether the user has chosen a course or not.
