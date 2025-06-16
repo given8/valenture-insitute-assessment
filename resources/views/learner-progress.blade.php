@@ -16,17 +16,22 @@
 </head>
 
 <body>
-    <div class="bg-red-400 py-10">
+    <div class="py-10">
         <div>
             <h1 class="text-blue font-black">Learner Progress Page</h1>
             <form action="/learner-progress" method="GET">
                 @csrf
-                <select name="course" selected="{{$courses->first()->id}}">
+                <select name="course">
+                    <option value="">Course Filter</option>
                     @foreach ($courses as $course)
                     <option value="{{ $course->id}}">{{ $course->name}}</option>
                     @endforeach
                 </select>
-                <button>Search</button>
+                <select name="sort" selected="asc">
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                </select>
+                <button>Filter</button>
             </form>
             <form action="/learner-progress" method="GET">
             <button>Clear Filters</button></form>
@@ -34,19 +39,20 @@
         
         @foreach ($learners as $learner)
             <div>
-                <h3>{{ $learner->firstname }} {{ $learner->lastname }}</h3>
+                <h3>{{ $learner->firstname }} {{ $learner->firstname }}</h3>
             </div>
             <div class="pl-2">
                 @foreach ($learner->courses as $course)
                     <div class="flex gap-2">
                         <p>{{ $course->name }}</p>
                         <p>{{ $course->pivot->progress }}</p>
+                        <p>{{ $learner->avg() }}</p>
                     </div>
                 @endforeach
             </div>
         @endforeach
         <div>
-            {{ $learners->links() }}
+            {{-- {{ $learners->links() }} --}}
         </div>
     </div>
 </body>
