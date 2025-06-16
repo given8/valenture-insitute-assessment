@@ -1,2 +1,2 @@
 dev:
-	php artisan serve
+	npm run build && php artisan serve
